@@ -865,25 +865,23 @@
         xhr.onerror = function() {
           if (settled) return;
           settled = true;
-          reject(new Error('XHR network error (status=' + xhr.status + ')'));
+          reject(new Error('XHR onerror (status=' + xhr.status + ', statusText=' + xhr.statusText + ')'));
         };
 
         xhr.ontimeout = function() {
           if (settled) return;
           settled = true;
-          reject(new Error('Request timeout after 15s'));
+          reject(new Error('Request timeout'));
         };
 
         // Fallback: onreadystatechange for browsers without onload
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4 && !settled) {
             if (xhr.status === 0) {
-              // Status 0 = network failure; onerror may fire too — let it take over
-              // If onerror doesn't fire within 200ms, reject ourselves
               setTimeout(function() {
                 if (!settled) {
                   settled = true;
-                  reject(new Error('Network error (status 0)'));
+                  reject(new Error('status 0, statusText=' + xhr.statusText));
                 }
               }, 200);
             } else {
@@ -893,7 +891,8 @@
           }
         };
 
-        xhr.timeout = 15000;
+        // NOTE: Do NOT set xhr.timeout on iOS 9 — causes status=0 bug with POST JSON
+        xhr.withCredentials = false;
         try {
           xhr.send((options && options.body) ? options.body : null);
         } catch(e) {

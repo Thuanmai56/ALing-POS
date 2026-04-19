@@ -263,6 +263,7 @@ let menuConfig = [
 let cart = {};
 let currentOptKey = null;
 let currentOptIndex = 0;
+let modalScrollPos = 0; // New global to track position before modal/keyboard opens
 
 function scrollToSec(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
@@ -424,6 +425,9 @@ function changeQty(cIdx, iIdx, amount) {
 }
 
 function openOptModal(cIdx, iIdx) {
+    // CAPTURE scroll position BEFORE modal/keyboard affects the layout
+    modalScrollPos = window.scrollY || window.pageYOffset;
+    
     currentOptKey = cIdx + "-" + iIdx;
     currentOptIndex = 0;
     const cat = menuConfig[cIdx];
@@ -447,18 +451,16 @@ function switchOptIndex(idx) {
 
 function closeOptModal() {
     document.getElementById('optionModal').style.display = 'none';
+    // Restore original position when closing (even if just clicking X)
+    // Delay slightly to let keyboard retract on mobile
+    setTimeout(function() {
+        window.scrollTo(0, modalScrollPos);
+    }, 50);
 }
 
 function saveOpt() {
-    // Remember scroll position
-    var scrollY = window.scrollY || window.pageYOffset;
     closeOptModal();
-    // Re-render cart ONLY once when clicking Confirm
     renderCart();
-    // Restore scroll on next frame
-    requestAnimationFrame(function() {
-        window.scrollTo(0, scrollY);
-    });
 }
 
 function updateOptCalcUI() {

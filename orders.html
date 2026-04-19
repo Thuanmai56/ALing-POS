@@ -946,11 +946,8 @@
       var btn = document.getElementById("auth-login-btn");
       if (!pw) { errEl.innerText = "請輸入密碼"; return; }
       btn.innerText = "驗證中..."; btn.disabled = true;
-      xhrFetch(WORKER_BASE + "/api/auth", {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body: JSON.stringify({ password: pw })
-      })
+      // GET request = no CORS preflight = works on iOS 9
+      xhrFetch(WORKER_BASE + "/api/auth?pw=" + encodeURIComponent(pw))
         .then(function(res) { return res.json(); })
         .then(function(data) {
           if (data.ok) { grantAccess(); }
@@ -1493,13 +1490,12 @@
         btn.innerText = "處理中...";
       }
 
-      var body = Object.assign({ key: key, status: status }, extra);
+      // Build GET query string - no CORS preflight, works on iOS 9
+      var params = "key=" + encodeURIComponent(key) + "&status=" + encodeURIComponent(status);
+      if (extra && extra.reason) params += "&reason=" + encodeURIComponent(extra.reason);
+      if (extra && extra.note !== undefined && extra.note !== null) params += "&note=" + encodeURIComponent(String(extra.note));
 
-      return xhrFetch(WORKER_BASE + "/api/update", {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body: JSON.stringify(body)
-      })
+      return xhrFetch(WORKER_BASE + "/api/update?" + params)
         .then(function(response) {
           if (!response.ok) throw new Error("update failed: " + response.status);
           localOverrides[key] = { status: status, time: Date.now() };

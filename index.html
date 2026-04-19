@@ -450,7 +450,13 @@ function closeOptModal() {
 }
 
 function saveOpt() {
+    // Remember scroll position so closing the modal doesn't jump the page
+    var scrollY = window.scrollY || window.pageYOffset;
     closeOptModal();
+    // Restore scroll on next frame after modal closes
+    requestAnimationFrame(function() {
+        window.scrollTo(0, scrollY);
+    });
 }
 
 function updateOptCalcUI() {
@@ -574,7 +580,10 @@ function setNoteOpt(val) {
     const list = cart[currentOptKey];
     const cItem = list[currentOptIndex];
     cItem.config['note'] = val;
-    renderCart(); 
+    // Save scroll position before re-rendering cart to prevent page jump
+    var scrollY = window.scrollY || window.pageYOffset;
+    renderCart();
+    window.scrollTo(0, scrollY);
 }
 
 function removeCart(key) {

@@ -948,7 +948,7 @@
       btn.innerText = "驗證中..."; btn.disabled = true;
       xhrFetch(WORKER_BASE + "/api/auth", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
         body: JSON.stringify({ password: pw })
       })
         .then(function(res) { return res.json(); })
@@ -983,7 +983,7 @@
       if (newPw.length < 4) { msg.style.color = "#d32f2f"; msg.innerText = "密碼至少4碼"; return; }
       xhrFetch(WORKER_BASE + "/api/auth/change", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
         body: JSON.stringify({ current: current, newPassword: newPw })
       })
         .then(function(res) { return res.json(); })
@@ -1497,7 +1497,7 @@
 
       return xhrFetch(WORKER_BASE + "/api/update", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
         body: JSON.stringify(body)
       })
         .then(function(response) {

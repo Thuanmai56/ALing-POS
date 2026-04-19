@@ -450,10 +450,12 @@ function closeOptModal() {
 }
 
 function saveOpt() {
-    // Remember scroll position so closing the modal doesn't jump the page
+    // Remember scroll position
     var scrollY = window.scrollY || window.pageYOffset;
     closeOptModal();
-    // Restore scroll on next frame after modal closes
+    // Re-render cart ONLY once when clicking Confirm
+    renderCart();
+    // Restore scroll on next frame
     requestAnimationFrame(function() {
         window.scrollTo(0, scrollY);
     });
@@ -580,10 +582,8 @@ function setNoteOpt(val) {
     const list = cart[currentOptKey];
     const cItem = list[currentOptIndex];
     cItem.config['note'] = val;
-    // Save scroll position before re-rendering cart to prevent page jump
-    var scrollY = window.scrollY || window.pageYOffset;
-    renderCart();
-    window.scrollTo(0, scrollY);
+    // Removed renderCart() from here to prevent page jump while typing.
+    // The cart will be updated when you click "Confirm" (saveOpt).
 }
 
 function removeCart(key) {

@@ -1624,10 +1624,7 @@
       }).join("");
 
       if (order.note) {
-        formattedLines += `<div style="margin-top: 20px; padding: 12px; background: #fff9c4; border-left: 4px solid #fbc02d; border-radius: 4px;">
-          <div style="font-weight: bold; color: #f57f17; font-size: 16px; margin-bottom: 4px;">📝 總備註 (Ghi chú tổng):</div>
-          <div style="font-size: 20px; color: #333; white-space: pre-wrap;">${escapeHtml(order.note)}</div>
-        </div>`;
+        formattedLines += `<div style="color: #555; font-size: 16px; margin-top: 12px; padding-left: 2px;">📝 ${escapeHtml(order.note)}</div>`;
       }
 
       return `<div class="detail-lines"><div class="detail-line primary" style="display:block; padding: 18px 22px;">${formattedLines}</div></div>`;

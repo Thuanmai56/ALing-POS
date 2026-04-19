@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,171 +16,485 @@
       --border: #e5e7eb;
     }
 
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: -apple-system, sans-serif; background: var(--bg); }
+    * {
+      box-sizing: border-box;
+    }
 
-    .app { height: 100vh; display: flex; flex-direction: column; }
+    body {
+      margin: 0;
+      font-family: -apple-system, sans-serif;
+      background: var(--bg);
+    }
+
+    .app {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
     .topbar {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 14px 16px; background: var(--card); border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--card);
+      border-bottom: 1px solid #eee;
     }
-    .brand { display: flex; align-items: baseline; gap: 10px; }
-    .brand-title { font-weight: 1000; font-size: 22px; }
-    .brand-sub { color: var(--muted); font-size: 15px; font-weight: 800; }
 
-    .tabs { display: flex; gap: 10px; align-items: center; }
-    .tab {
-      border: 1px solid var(--border); background: #fff;
-      padding: 12px 18px; border-radius: 999px; font-weight: 1000;
-      cursor: pointer; font-size: 16px;
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
     }
-    .tab.active { border-color: var(--primary); color: var(--primary); border-width: 2px; }
+
+    .brand-title {
+      font-weight: 1000;
+      font-size: 22px;
+    }
+
+    .brand-sub {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .tab {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 1000;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .tab.active {
+      border-color: var(--primary);
+      color: var(--primary);
+      border-width: 2px;
+    }
+
     .mini-btn {
       border: 1px solid var(--border);
-      background: #fff; color: #111827;
-      border-radius: 999px; padding: 10px 14px;
-      font-size: 14px; font-weight: 1000; cursor: pointer; white-space: nowrap;
-    }
-    .status-pill {
-      padding: 10px 14px; border-radius: 999px; background: #f3f4f6;
-      font-size: 15px; color: #111827; white-space: nowrap; font-weight: 900;
+      background: #fff;
+      color: #111827;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 1000;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
-    .content { flex: 1; min-height: 0; padding: 14px 16px; }
-    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; height: 100%; }
+    .status-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      font-size: 15px;
+      color: #111827;
+      white-space: nowrap;
+      font-weight: 900;
+    }
+
+    .content {
+      flex: 1;
+      min-height: 0;
+      padding: 14px 16px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      height: 100%;
+    }
 
     .panel {
-      background: var(--card); border: 1px solid #eee; border-radius: 16px;
-      display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+      background: var(--card);
+      border: 1px solid #eee;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
     }
+
     .panel-header {
-      padding: 16px 18px; border-bottom: 1px solid #eee;
-      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 18px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .panel-title { font-weight: 1100; font-size: 20px; }
-    .panel-sub { color: var(--muted); font-size: 14px; font-weight: 900; margin-top: 4px; }
-    .panel-body { padding: 12px; overflow: auto; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
+
+    .panel-title {
+      font-weight: 1100;
+      font-size: 20px;
+    }
+
+    .panel-sub {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 900;
+      margin-top: 4px;
+    }
+
+    .panel-body {
+      padding: 12px;
+      overflow: auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
     .badge {
-      display: inline-flex; align-items: center;
-      padding: 6px 12px; border-radius: 999px;
-      font-size: 14px; font-weight: 1100;
-      background: #f3f4f6; color: #111827;
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 1100;
+      background: #f3f4f6;
+      color: #111827;
     }
-    .badge.new { background: rgba(211,47,47,0.12); color: var(--brand-red); }
-    .badge.wait { background: rgba(255,204,0,0.18); color: #7a5a00; }
-    .badge.done { background: rgba(0,185,0,0.12); color: var(--primary); }
+
+    .badge.new {
+      background: rgba(211, 47, 47, 0.12);
+      color: var(--brand-red);
+    }
+
+    .badge.wait {
+      background: rgba(255, 204, 0, 0.18);
+      color: #7a5a00;
+    }
+
+    .badge.done {
+      background: rgba(0, 185, 0, 0.12);
+      color: var(--primary);
+    }
 
     .tile {
-      border: 1px solid var(--border); border-radius: 16px;
-      padding: 16px; display: grid; grid-template-columns: 1fr auto; gap: 14px;
-      cursor: pointer; background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      cursor: pointer;
+      background: #fff;
     }
-    .tile.new { border-color: rgba(211,47,47,0.35); box-shadow: 0 0 0 3px rgba(211,47,47,0.08) inset; }
-    .tile-top { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: baseline; }
-    .tile-customer { font-weight: 1100; font-size: 18px; }
-    .tile-meta { color: var(--muted); font-size: 14px; font-weight: 900; }
+
+    .tile.new {
+      border-color: rgba(211, 47, 47, 0.35);
+      box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.08) inset;
+    }
+
+    .tile-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+      align-items: baseline;
+    }
+
+    .tile-customer {
+      font-weight: 1100;
+      font-size: 18px;
+    }
+
+    .tile-meta {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
     .tile-items {
-      margin-top: 8px; color: #111827; font-size: 16px; line-height: 1.45;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-      overflow: hidden; white-space: pre-line;
+      margin-top: 8px;
+      color: #111827;
+      font-size: 16px;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      white-space: pre-line;
     }
-    .tile-actions { display: flex; flex-direction: column; gap: 10px; justify-content: center; min-width: 180px; }
+
+    .tile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      min-width: 180px;
+    }
 
     .btn {
-      border: none; padding: 16px; border-radius: 14px;
-      font-weight: 1100; font-size: 18px; cursor: pointer;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 1100;
+      font-size: 18px;
+      cursor: pointer;
       transition: transform 0.05s ease, opacity 0.2s ease;
     }
-    .btn:active { transform: scale(0.99); }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-yellow { background: var(--brand-yellow); color: #1f2937; }
-    .btn-danger { background: var(--brand-red); color: #fff; }
-    .btn-ghost { background: #f3f4f6; color: #111827; }
-    .btn-block { width: 100%; }
+
+    .btn:active {
+      transform: scale(0.99);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-yellow {
+      background: var(--brand-yellow);
+      color: #1f2937;
+    }
+
+    .btn-danger {
+      background: var(--brand-red);
+      color: #fff;
+    }
+
+    .btn-ghost {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
 
     /* Fullscreen new order alert */
     .new-alert {
-      position: fixed; inset: 0; z-index: 2000;
-      display: none; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, rgba(211,47,47,0.97), rgba(255,204,0,0.92));
-      padding: 20px; text-align: center;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(211, 47, 47, 0.97), rgba(255, 204, 0, 0.92));
+      padding: 20px;
+      text-align: center;
     }
+
     .new-alert-box {
       width: min(680px, 96vw);
-      background: rgba(255,255,255,0.92);
-      border: 2px solid rgba(255,255,255,0.55);
-      border-radius: 22px; padding: 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid rgba(255, 255, 255, 0.55);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
-    .new-alert-title { font-size: 34px; font-weight: 1200; margin: 0; color: #111827; }
-    .new-alert-sub { margin-top: 10px; color: #111827; font-weight: 1000; font-size: 14px; opacity: 0.75; }
-    .new-alert-actions { margin-top: 16px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+    .new-alert-title {
+      font-size: 34px;
+      font-weight: 1200;
+      margin: 0;
+      color: #111827;
+    }
+
+    .new-alert-sub {
+      margin-top: 10px;
+      color: #111827;
+      font-weight: 1000;
+      font-size: 14px;
+      opacity: 0.75;
+    }
+
+    .new-alert-actions {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
 
     /* Modal */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2100; justify-content: center; align-items: center; padding: 20px; }
-    .modal-content { background: #fff; border-radius: 20px; width: min(860px, 96vw); max-height: 88vh; overflow: auto; padding: 24px; }
-    .modal-title { display:flex; justify-content: space-between; align-items:center; gap: 12px; }
-    .modal-title h3 { margin: 0; font-weight: 1100; font-size: 28px; }
-    .modal-close { cursor: pointer; font-weight: 1200; font-size: 26px; padding: 10px 18px; border-radius: 12px; background: #f3f4f6; }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
-    .detail-box { border: 1px solid var(--border); border-radius: 14px; padding: 16px; background: #fff; }
-    .detail-label { color: var(--muted); font-size: 16px; font-weight: 1100; }
-    .detail-value { margin-top: 10px; font-size: 24px; font-weight: 1100; color: #111827; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight: 1000; font-size: 26px; }
+    .modal-content {
+      background: #fff;
+      border-radius: 20px;
+      width: min(860px, 96vw);
+      max-height: 88vh;
+      overflow: auto;
+      padding: 24px;
+    }
+
+    .modal-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-title h3 {
+      margin: 0;
+      font-weight: 1100;
+      font-size: 28px;
+    }
+
+    .modal-close {
+      cursor: pointer;
+      font-weight: 1200;
+      font-size: 26px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: #f3f4f6;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .detail-box {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .detail-label {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 1100;
+    }
+
+    .detail-value {
+      margin-top: 10px;
+      font-size: 24px;
+      font-weight: 1100;
+      color: #111827;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-weight: 1000;
+      font-size: 26px;
+    }
 
     .detail-content {
-      margin-top: 18px; border: 1px solid var(--border); border-radius: 16px;
-      padding: 18px; background: #fff; white-space: pre-line; line-height: 1.6; font-size: 22px;
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fff;
+      white-space: pre-line;
+      line-height: 1.6;
+      font-size: 22px;
     }
-    .detail-lines { display: flex; flex-direction: column; gap: 12px; }
+
+    .detail-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .detail-line {
       padding: 16px 16px;
-      border: 1px solid rgba(229,231,235,0.9);
+      border: 1px solid rgba(229, 231, 235, 0.9);
       border-radius: 14px;
       background: #fff;
       white-space: pre-wrap;
       line-height: 1.6;
       font-size: 24px;
     }
+
     .detail-line.primary {
-      border-color: rgba(0,185,0,0.25);
-      background: rgba(0,185,0,0.05);
+      border-color: rgba(0, 185, 0, 0.25);
+      background: rgba(0, 185, 0, 0.05);
       font-weight: 1100;
     }
+
     .detail-line.sub {
-      border-color: rgba(211,47,47,0.18);
-      background: rgba(211,47,47,0.03);
+      border-color: rgba(211, 47, 47, 0.18);
+      background: rgba(211, 47, 47, 0.03);
       padding-left: 14px;
     }
 
-    .modal-actions { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .modal-actions.two { grid-template-columns: 1fr 1fr; }
+    .modal-actions {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
 
-    .checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
-    .checkbox-label { display: flex; align-items: center; gap: 12px; font-size: 22px; cursor: pointer; color: #111827; font-weight: 1000; }
-    .checkbox-label input { width: 32px; height: 32px; margin: 0; cursor: pointer; accent-color: var(--primary); }
+    .modal-actions.two {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #111827;
+      font-weight: 1000;
+    }
+
+    .checkbox-label input {
+      width: 32px;
+      height: 32px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
 
     @media (max-width: 960px) {
-      .split { grid-template-columns: 1fr; }
-      .tile-actions { min-width: 140px; }
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .tile-actions {
+        min-width: 140px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ====== LOGIN OVERLAY ====== -->
-  <div id="auth-overlay" style="display:none; position:fixed; inset:0; background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); z-index:99999; align-items:center; justify-content:center;">
-    <div style="background:#fff; border-radius:24px; padding:40px 32px; width:90%; max-width:340px; text-align:center; box-shadow:0 24px 80px rgba(0,0,0,0.5);">
+  <div id="auth-overlay"
+    style="display:none; position:fixed; inset:0; background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); z-index:99999; align-items:center; justify-content:center;">
+    <div
+      style="background:#fff; border-radius:24px; padding:40px 32px; width:90%; max-width:340px; text-align:center; box-shadow:0 24px 80px rgba(0,0,0,0.5);">
       <div style="font-size:52px; margin-bottom:12px;">🔐</div>
       <div style="font-size:22px; font-weight:900; color:#111; margin-bottom:4px;">阿玲越南小吃 後台</div>
       <div style="font-size:13px; color:#999; margin-bottom:28px;">請輸入密碼以進入</div>
       <input type="password" id="auth-pw-input" placeholder="密碼"
         style="width:100%; padding:14px; border:2px solid #e5e7eb; border-radius:12px; font-size:18px; text-align:center; outline:none; font-family:inherit; box-sizing:border-box; letter-spacing:4px;"
         onkeydown="if(event.key==='Enter') doLogin()">
-      <div id="auth-error" style="color:#d32f2f; font-size:13px; font-weight:800; margin-top:10px; min-height:18px;"></div>
+      <div id="auth-error" style="color:#d32f2f; font-size:13px; font-weight:800; margin-top:10px; min-height:18px;">
+      </div>
       <button onclick="doLogin()" id="auth-login-btn"
         style="width:100%; margin-top:14px; background:var(--primary); color:white; border:none; padding:16px; border-radius:12px; font-size:16px; font-weight:900; cursor:pointer; transition:opacity 0.2s;">
         進入 →
@@ -188,8 +503,10 @@
   </div>
 
   <!-- ====== SETTINGS MODAL ====== -->
-  <div id="settings-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9998; align-items:center; justify-content:center;">
-    <div style="background:#fff; border-radius:20px; padding:28px; width:90%; max-width:400px; box-shadow:0 12px 40px rgba(0,0,0,0.3);">
+  <div id="settings-modal"
+    style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9998; align-items:center; justify-content:center;">
+    <div
+      style="background:#fff; border-radius:20px; padding:28px; width:90%; max-width:400px; box-shadow:0 12px 40px rgba(0,0,0,0.3);">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
         <span style="font-size:18px; font-weight:900;">⚙️ 設定</span>
         <span onclick="closeSettings()" style="cursor:pointer; font-size:22px; color:#999;">✕</span>
@@ -198,34 +515,44 @@
       <!-- Change Password -->
       <div style="background:#f9fafb; border-radius:14px; padding:16px; margin-bottom:14px;">
         <div style="font-weight:900; font-size:15px; margin-bottom:12px;">🔑 更換密碼</div>
-        <input type="password" id="chpw-current" placeholder="目前密碼" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:8px; font-size:14px; box-sizing:border-box; font-family:inherit;">
-        <input type="password" id="chpw-new" placeholder="新密碼" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:8px; font-size:14px; box-sizing:border-box; font-family:inherit;">
-        <input type="password" id="chpw-confirm" placeholder="確認新密碼" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:8px; font-size:14px; box-sizing:border-box; font-family:inherit;">
+        <input type="password" id="chpw-current" placeholder="目前密碼"
+          style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:8px; font-size:14px; box-sizing:border-box; font-family:inherit;">
+        <input type="password" id="chpw-new" placeholder="新密碼"
+          style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:8px; font-size:14px; box-sizing:border-box; font-family:inherit;">
+        <input type="password" id="chpw-confirm" placeholder="確認新密碼"
+          style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:8px; font-size:14px; box-sizing:border-box; font-family:inherit;">
         <div id="chpw-msg" style="font-size:13px; font-weight:800; min-height:16px; margin-bottom:8px;"></div>
-        <button onclick="doChangePassword()" style="width:100%; padding:10px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:900; cursor:pointer; font-size:14px;">儲存新密碼</button>
+        <button onclick="doChangePassword()"
+          style="width:100%; padding:10px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:900; cursor:pointer; font-size:14px;">儲存新密碼</button>
       </div>
 
       <!-- Temp Link -->
       <div style="background:#f9fafb; border-radius:14px; padding:16px;">
         <div style="font-weight:900; font-size:15px; margin-bottom:12px;">🔗 生成臨時連結</div>
         <div style="display:flex; gap:8px; margin-bottom:8px;">
-          <select id="templink-hours" style="flex:1; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:14px; font-family:inherit;">
+          <select id="templink-hours"
+            style="flex:1; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:14px; font-family:inherit;">
             <option value="2">2 小時</option>
             <option value="6">6 小時</option>
             <option value="24" selected>24 小時</option>
             <option value="72">3 天</option>
             <option value="168">7 天</option>
           </select>
-          <button onclick="doCreateTempLink()" style="padding:10px 16px; background:#3b82f6; color:#fff; border:none; border-radius:8px; font-weight:900; cursor:pointer; font-size:14px;">生成</button>
+          <button onclick="doCreateTempLink()"
+            style="padding:10px 16px; background:#3b82f6; color:#fff; border:none; border-radius:8px; font-weight:900; cursor:pointer; font-size:14px;">生成</button>
         </div>
-        <div id="templink-result" style="font-size:12px; word-break:break-all; background:#eff6ff; padding:10px; border-radius:8px; display:none;">
+        <div id="templink-result"
+          style="font-size:12px; word-break:break-all; background:#eff6ff; padding:10px; border-radius:8px; display:none;">
           <div style="font-weight:900; margin-bottom:4px; color:#1d4ed8;">临時連結（點擊復製）：</div>
-          <div id="templink-url" style="color:#1e40af; cursor:pointer; text-decoration:underline;" onclick="copyTempLink()"></div>
+          <div id="templink-url" style="color:#1e40af; cursor:pointer; text-decoration:underline;"
+            onclick="copyTempLink()"></div>
           <div id="templink-expiry" style="color:#6b7280; margin-top:4px;"></div>
         </div>
       </div>
 
-      <button onclick="doLogout()" style="width:100%; margin-top:14px; padding:10px; background:#fee2e2; color:#d32f2f; border:none; border-radius:10px; font-weight:900; cursor:pointer; font-size:14px;">🚪 登出</button>
+      <button onclick="doLogout()"
+        style="width:100%; margin-top:14px; padding:10px; background:#fee2e2; color:#d32f2f; border:none; border-radius:10px; font-weight:900; cursor:pointer; font-size:14px;">🚪
+        登出</button>
     </div>
   </div>
   <div class="app">
@@ -302,7 +629,7 @@
             <!-- Categories rendered here -->
           </div>
         </div>
-        
+
         <div class="panel">
           <div class="panel-header">
             <div>
@@ -310,8 +637,10 @@
               <div class="panel-sub">編輯價格 (留白表示隱藏)</div>
             </div>
             <div>
-              <button class="btn btn-yellow" style="padding: 8px 16px; font-size: 14px;" onclick="addNewMenuItem()">+ 新增項目</button>
-              <button class="btn btn-primary" style="padding: 8px 16px; font-size: 14px; margin-left: 8px;" onclick="saveMenuData()">儲存變更</button>
+              <button class="btn btn-yellow" style="padding: 8px 16px; font-size: 14px;" onclick="addNewMenuItem()">+
+                新增項目</button>
+              <button class="btn btn-primary" style="padding: 8px 16px; font-size: 14px; margin-left: 8px;"
+                onclick="saveMenuData()">儲存變更</button>
             </div>
           </div>
           <div class="panel-body" id="menu-editor-body" style="background: #f9fafb;">
@@ -375,13 +704,16 @@
 
       <div class="modal-actions" id="review-actions-accepted" style="display:none;">
         <button class="btn btn-primary" onclick="markReadyFromReview(this)">準備好了</button>
-        <button class="btn btn-danger" onclick="if(confirm('您確定要取消此訂單嗎？不會通知客戶。')){ updateStatus(reviewingOrder.key, 'REJECTED', { reason: '取消並不回復客戶' }, this).then(() => closeModal()); }">取消訂單</button>
+        <button class="btn btn-danger"
+          onclick="if(confirm('您確定要取消此訂單嗎？不會通知客戶。')){ updateStatus(reviewingOrder.key, 'REJECTED', { reason: '取消並不回復客戶' }, this).then(() => closeModal()); }">取消訂單</button>
         <button class="btn btn-ghost" onclick="closeModal()">關閉</button>
       </div>
 
       <div class="modal-actions" id="review-actions-done" style="display:none;">
-        <button class="btn btn-primary" onclick="updateStatus(reviewingOrder.key, 'PICKED_UP', {}, this).then(() => closeModal());">已取餐</button>
-        <button class="btn btn-danger" onclick="if(confirm('您確定要取消此訂單嗎？不會通知客戶。')){ updateStatus(reviewingOrder.key, 'REJECTED', { reason: '取消並不回復客戶' }, this).then(() => closeModal()); }">取消訂單</button>
+        <button class="btn btn-primary"
+          onclick="updateStatus(reviewingOrder.key, 'PICKED_UP', {}, this).then(() => closeModal());">已取餐</button>
+        <button class="btn btn-danger"
+          onclick="if(confirm('您確定要取消此訂單嗎？不會通知客戶。')){ updateStatus(reviewingOrder.key, 'REJECTED', { reason: '取消並不回復客戶' }, this).then(() => closeModal()); }">取消訂單</button>
         <button class="btn btn-ghost" onclick="closeModal()">關閉</button>
       </div>
 
@@ -401,15 +733,18 @@
         <div class="modal-close" onclick="closeModal()">✕</div>
       </div>
       <label style="display:block; margin-top: 10px; font-weight: 1100; font-size: 20px;">原因 / 建議:</label>
-      <select id="change-reason" style="width:100%; padding: 16px; margin-top: 10px; border-radius: 12px; border: 1px solid var(--border); font-size: 22px;" onchange="onChangeReasonChange()">
+      <select id="change-reason"
+        style="width:100%; padding: 16px; margin-top: 10px; border-radius: 12px; border: 1px solid var(--border); font-size: 22px;"
+        onchange="onChangeReasonChange()">
         <option value="時間需調整">時間太趕，需延後</option>
         <option value="口味售完">該口味已售完</option>
       </select>
-      <textarea id="change-note" rows="3" placeholder="建議時間 (例如: 11:00)" style="width:100%; padding: 16px; margin-top: 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 22px;"></textarea>
-      
+      <textarea id="change-note" rows="3" placeholder="建議時間 (例如: 11:00)"
+        style="width:100%; padding: 16px; margin-top: 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 22px;"></textarea>
+
       <div id="change-items-div" style="display: none;">
         <div style="margin-top: 16px; font-weight: 1000; font-size: 18px; margin-bottom: 12px;">選擇已售完或缺貨的品項 :</div>
-        
+
         <div style="font-weight: 900; font-size: 16px; margin-bottom: 8px; color: #555;">🍞 麵包 / 餅皮</div>
         <div class="checkbox-grid" style="margin-top: 0; margin-bottom: 16px;">
           <label class="checkbox-label"><input type="checkbox" value="吐司" class="sold-item"> 吐司</label>
@@ -468,7 +803,8 @@
         <h3>無法接單</h3>
         <div class="modal-close" onclick="closeModal()">✕</div>
       </div>
-      <select id="reject-reason" style="width:100%; padding: 16px; margin-top: 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 22px;">
+      <select id="reject-reason"
+        style="width:100%; padding: 16px; margin-top: 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 22px;">
         <option value="今日已售完">今日已售完</option>
         <option value="訂單過多">訂單過多，暫不接單</option>
         <option value="已過營業時間">已過營業時間</option>
@@ -497,9 +833,9 @@
         try {
           const res = await fetch(`${WORKER_BASE}/api/auth/templink?t=${encodeURIComponent(token)}&_t=${Date.now()}`);
           const data = await res.json();
-          if (data.ok) { 
-            grantAccess(); 
-            return; 
+          if (data.ok) {
+            grantAccess();
+            return;
           } else {
             // Link expired or invalid - FORCE LOGOUT
             sessionStorage.removeItem("brunch_auth");
@@ -536,7 +872,7 @@
       btn.innerText = "驗證中..."; btn.disabled = true;
       try {
         const res = await fetch(`${WORKER_BASE}/api/auth`, {
-          method: "POST", headers: {"Content-Type": "application/json"},
+          method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ password: pw })
         });
         const data = await res.json();
@@ -555,7 +891,7 @@
       const m = document.getElementById("settings-modal");
       m.style.display = "flex";
       // Reset fields
-      ["chpw-current","chpw-new","chpw-confirm"].forEach(id => document.getElementById(id).value = "");
+      ["chpw-current", "chpw-new", "chpw-confirm"].forEach(id => document.getElementById(id).value = "");
       document.getElementById("chpw-msg").innerText = "";
       document.getElementById("templink-result").style.display = "none";
     }
@@ -571,7 +907,7 @@
       if (newPw.length < 4) { msg.style.color = "#d32f2f"; msg.innerText = "密碼至少4碼"; return; }
       try {
         const res = await fetch(`${WORKER_BASE}/api/auth/change`, {
-          method: "POST", headers: {"Content-Type": "application/json"},
+          method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ current, newPassword: newPw })
         });
         const data = await res.json();
@@ -588,7 +924,7 @@
       const hours = parseInt(document.getElementById("templink-hours").value);
       try {
         const res = await fetch(`${WORKER_BASE}/api/auth/templink`, {
-          method: "POST", headers: {"Content-Type": "application/json"},
+          method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ password: pw, hours })
         });
         const data = await res.json();
@@ -646,7 +982,7 @@
     document.addEventListener("keydown", unlockSound, { once: true });
 
     function escapeHtml(s) {
-      return String(s ?? "")
+      return String(s !== null && s !== undefined ? s : "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -664,9 +1000,9 @@
     }
 
     function sortByPickupTimeAsc(a, b) {
-      const at = parsePickupTimeMs(a?.time);
-      const bt = parsePickupTimeMs(b?.time);
-      if (Number.isNaN(at) || Number.isNaN(bt)) return (a?.createdAt || 0) - (b?.createdAt || 0);
+      const at = parsePickupTimeMs(a && a.time);
+      const bt = parsePickupTimeMs(b && b.time);
+      if (Number.isNaN(at) || Number.isNaN(bt)) return ((a && a.createdAt) || 0) - ((b && b.createdAt) || 0);
       return at - bt;
     }
 
@@ -696,7 +1032,7 @@
       document.getElementById("view-live").style.display = tab === "live" ? "block" : "none";
       document.getElementById("view-history").style.display = tab === "history" ? "block" : "none";
       document.getElementById("view-menu").style.display = tab === "menu" ? "block" : "none";
-      
+
       if (tab === "menu" && !currentMenuData) {
         loadMenuData();
       } else if (tab !== "menu") {
@@ -755,7 +1091,7 @@
       if (!currentMenuData || !currentMenuData[index]) return;
       const cat = currentMenuData[index];
       document.getElementById("menu-editor-title").innerText = cat.title + " (全部 " + cat.items.length + " 項)";
-      
+
       const container = document.getElementById("menu-editor-body");
       container.innerHTML = "";
 
@@ -767,52 +1103,52 @@
         row.draggable = true;
 
         row.addEventListener("dragstart", (e) => {
-           draggedItemIndex = iIdx;
-           e.dataTransfer.effectAllowed = "move";
-           setTimeout(() => row.style.opacity = "0.4", 0);
+          draggedItemIndex = iIdx;
+          e.dataTransfer.effectAllowed = "move";
+          setTimeout(() => row.style.opacity = "0.4", 0);
         });
         row.addEventListener("dragend", (e) => {
-           row.style.opacity = "1";
+          row.style.opacity = "1";
         });
         row.addEventListener("dragover", (e) => {
-           e.preventDefault();
-           row.style.border = "2px dashed var(--primary)";
+          e.preventDefault();
+          row.style.border = "2px dashed var(--primary)";
         });
         row.addEventListener("dragleave", (e) => {
-           row.style.border = "1px solid var(--border)";
+          row.style.border = "1px solid var(--border)";
         });
         row.addEventListener("drop", (e) => {
-           e.preventDefault();
-           row.style.border = "1px solid var(--border)";
-           if (draggedItemIndex !== null && draggedItemIndex !== iIdx) {
-              syncMenuDataFromDOM();
-              let arr = currentMenuData[index].items;
-              const movedItem = arr.splice(draggedItemIndex, 1)[0];
-              arr.splice(iIdx, 0, movedItem);
-              renderMenuCategoryEditor(index);
-           }
+          e.preventDefault();
+          row.style.border = "1px solid var(--border)";
+          if (draggedItemIndex !== null && draggedItemIndex !== iIdx) {
+            syncMenuDataFromDOM();
+            let arr = currentMenuData[index].items;
+            const movedItem = arr.splice(draggedItemIndex, 1)[0];
+            arr.splice(iIdx, 0, movedItem);
+            renderMenuCategoryEditor(index);
+          }
         });
-        
+
         let priceInputsHtml = '';
         if (item.prices) {
-            // Uses pricing array
-            let descriptors = cat.sizes || cat.sauces || [];
-            if (descriptors.length === 0) descriptors = item.prices.map((_, i) => "價格" + (i+1));
-            
-            priceInputsHtml = `<div style="display:flex; gap: 8px; flex-wrap: wrap;">`;
-            for (let i = 0; i < item.prices.length; i++) {
-                const pVal = item.prices[i] !== null && item.prices[i] !== undefined ? item.prices[i] : "";
-                const dLabel = descriptors[i] || "";
-                priceInputsHtml += `<label style="display:flex; flex-direction:column; font-weight: 800; font-size:14px; color:#555;">
+          // Uses pricing array
+          let descriptors = cat.sizes || cat.sauces || [];
+          if (descriptors.length === 0) descriptors = item.prices.map((_, i) => "價格" + (i + 1));
+
+          priceInputsHtml = `<div style="display:flex; gap: 8px; flex-wrap: wrap;">`;
+          for (let i = 0; i < item.prices.length; i++) {
+            const pVal = item.prices[i] !== null && item.prices[i] !== undefined ? item.prices[i] : "";
+            const dLabel = descriptors[i] || "";
+            priceInputsHtml += `<label style="display:flex; flex-direction:column; font-weight: 800; font-size:14px; color:#555;">
                   ${dLabel}
                   <input type="number" data-cidx="${index}" data-iidx="${iIdx}" data-pidx="${i}" value="${pVal}" placeholder="不販售" style="padding: 8px; width: 80px; border-radius: 8px; border: 1px solid #ccc; font-weight:800; font-family:inherit;">
                 </label>`;
-            }
-            priceInputsHtml += `</div>`;
+          }
+          priceInputsHtml += `</div>`;
         } else {
-            // Single price
-            const pVal = item.price !== null && item.price !== undefined ? item.price : "";
-            priceInputsHtml = `<label style="display:flex; flex-direction:column; font-weight: 800; font-size:14px; color:#555;">
+          // Single price
+          const pVal = item.price !== null && item.price !== undefined ? item.price : "";
+          priceInputsHtml = `<label style="display:flex; flex-direction:column; font-weight: 800; font-size:14px; color:#555;">
               單價
               <input type="number" data-cidx="${index}" data-iidx="${iIdx}" value="${pVal}" placeholder="不販售" style="padding: 8px; width: 100px; border-radius: 8px; border: 1px solid #ccc; font-weight:800; font-family:inherit;">
             </label>`;
@@ -844,36 +1180,36 @@
       syncMenuDataFromDOM(); // Sync first so we don't lose data on re-render
       const cat = currentMenuData[activeCategoryIndex];
       let newItem = { name: "新項目" };
-      
+
       // Determine shape based on existing items
       if (cat.items.length > 0 && cat.items[0].prices) {
-         newItem.prices = new Array(cat.items[0].prices.length).fill(null);
+        newItem.prices = new Array(cat.items[0].prices.length).fill(null);
       } else {
-         newItem.price = 0;
+        newItem.price = 0;
       }
-      
+
       cat.items.unshift(newItem); // Add to the TOP instead of bottom
       renderMenuCategoryEditor(activeCategoryIndex);
     }
 
     function syncMenuDataFromDOM() {
       document.querySelectorAll('#menu-editor-body input[data-name-cidx]').forEach(inp => {
-          const cIdx = parseInt(inp.getAttribute('data-name-cidx'));
-          const iIdx = parseInt(inp.getAttribute('data-name-iidx'));
-          currentMenuData[cIdx].items[iIdx].name = inp.value;
+        const cIdx = parseInt(inp.getAttribute('data-name-cidx'));
+        const iIdx = parseInt(inp.getAttribute('data-name-iidx'));
+        currentMenuData[cIdx].items[iIdx].name = inp.value;
       });
 
       document.querySelectorAll('#menu-editor-body input[data-cidx]').forEach(inp => {
-          const cIdx = parseInt(inp.getAttribute('data-cidx'));
-          const iIdx = parseInt(inp.getAttribute('data-iidx'));
-          const pIdxStr = inp.getAttribute('data-pidx');
-          const val = inp.value.trim() === "" ? null : parseFloat(inp.value);
+        const cIdx = parseInt(inp.getAttribute('data-cidx'));
+        const iIdx = parseInt(inp.getAttribute('data-iidx'));
+        const pIdxStr = inp.getAttribute('data-pidx');
+        const val = inp.value.trim() === "" ? null : parseFloat(inp.value);
 
-          if (pIdxStr !== null && pIdxStr !== undefined) {
-             currentMenuData[cIdx].items[iIdx].prices[parseInt(pIdxStr)] = val;
-          } else {
-             currentMenuData[cIdx].items[iIdx].price = val;
-          }
+        if (pIdxStr !== null && pIdxStr !== undefined) {
+          currentMenuData[cIdx].items[iIdx].prices[parseInt(pIdxStr)] = val;
+        } else {
+          currentMenuData[cIdx].items[iIdx].price = val;
+        }
       });
     }
 
@@ -911,15 +1247,15 @@
         if (!response.ok) throw new Error(`fetch failed: ${response.status}`);
         let orders = await response.json();
         if (!Array.isArray(orders)) orders = [];
-        
+
         // Deduplicate
         const uniqueMap = new Map();
-        orders.forEach(o => { if (o?.key) uniqueMap.set(o.key, o); });
+        orders.forEach(o => { if (o && o.key) uniqueMap.set(o.key, o); });
         latestOrders = Array.from(uniqueMap.values());
 
         // New arrivals => sound
         const newArrivals = latestOrders.filter(o => o && o.key && !knownOrderKeys.has(o.key));
-        newArrivals.forEach(o => { if (o?.key) knownOrderKeys.add(o.key); });
+        newArrivals.forEach(o => { if (o && o.key) knownOrderKeys.add(o.key); });
 
         // NEW orders => fullscreen alert
         pendingNewOrders = latestOrders.filter(o => o && o.status === "NEW").slice().sort(sortByPickupTimeAsc);
@@ -932,7 +1268,7 @@
         renderAll();
       } catch (e) {
         console.error(e);
-        document.getElementById("list-left").innerHTML = `<div style="text-align:center; padding: 22px; color:#d32f2f;">無法載入: ${escapeHtml(e?.message || e)}</div>`;
+        document.getElementById("list-left").innerHTML = `<div style="text-align:center; padding: 22px; color:#d32f2f;">無法載入: ${escapeHtml((e && e.message) || e)}</div>`;
         document.getElementById("list-right").innerHTML = `<div style="text-align:center; padding: 22px; color:#d32f2f;">無法載入</div>`;
         document.getElementById("list-history").innerHTML = `<div style="text-align:center; padding: 22px; color:#d32f2f;">無法載入</div>`;
       }
@@ -946,11 +1282,11 @@
       const currentOrders = latestOrders.map(o => {
         const override = localOverrides[o.key];
         if (override && (now - override.time < 15000)) {
-           return { ...o, status: override.status };
+          return { ...o, status: override.status };
         }
         // Cleanup old overrides
         if (override && (now - override.time >= 15000)) {
-           delete localOverrides[o.key];
+          delete localOverrides[o.key];
         }
         return o;
       });
@@ -968,7 +1304,7 @@
       const historyOrders = currentOrders
         .filter(o => o && ["PICKED_UP", "REJECTED"].includes(o.status))
         .slice()
-        .sort((a, b) => (b?.createdAt || 0) - (a?.createdAt || 0));
+        .sort((a, b) => ((b && b.createdAt) || 0) - ((a && a.createdAt) || 0));
 
       document.getElementById("count-left").innerText = String(leftOrders.length);
       document.getElementById("count-right").innerText = String(rightOrders.length);
@@ -1079,7 +1415,7 @@
           const mm = String(nowTaiwan.getUTCMonth() + 1).padStart(2, "0");
           const dd = String(nowTaiwan.getUTCDate()).padStart(2, "0");
           d = `${yyyy}-${mm}-${dd}`;
-        } else if (o?.time && typeof o.time === "string" && o.time.match(/^\d{4}-\d{2}-\d{2}/)) {
+        } else if (o && o.time && typeof o.time === "string" && o.time.match(/^\d{4}-\d{2}-\d{2}/)) {
           d = o.time.slice(0, 10);
         }
         if (!map.has(d)) map.set(d, []);
@@ -1198,13 +1534,13 @@
       }
 
       // Kiểm tra xem có BẤT KỲ bảng nào liên quan đến Review đang mở không
-      const isReviewing = 
+      const isReviewing =
         document.getElementById("reviewModal").style.display === "flex" ||
         document.getElementById("changeModal").style.display === "flex" ||
         document.getElementById("rejectModal").style.display === "flex";
 
       if (Date.now() < newAlertSnoozeUntilMs || isReviewing) {
-        const hasBrandNew = pendingNewOrders.some(o => o?.key && !snoozedNewOrderKeys.has(o.key));
+        const hasBrandNew = pendingNewOrders.some(o => o && o.key && !snoozedNewOrderKeys.has(o.key));
         if (!hasBrandNew) {
           alertEl.style.display = "none";
           stopContinuousAlarm();
@@ -1218,7 +1554,7 @@
 
     function dismissNewAlert() {
       newAlertSnoozeUntilMs = Date.now() + 30_000;
-      snoozedNewOrderKeys = new Set(pendingNewOrders.map(o => o?.key).filter(Boolean));
+      snoozedNewOrderKeys = new Set(pendingNewOrders.map(o => o && o.key).filter(Boolean));
       document.getElementById("new-alert").style.display = "none";
       stopContinuousAlarm();
     }
@@ -1319,7 +1655,7 @@
           body: JSON.stringify({ key, status, ...extra })
         });
         if (!response.ok) throw new Error(`update failed: ${response.status}`);
-        
+
         // Apply local override immediately for responsiveness
         localOverrides[key] = { status, time: Date.now() };
         renderAll();
@@ -1339,7 +1675,7 @@
     }
 
     async function reviewAccept(btn) {
-      if (!reviewingOrder?.key) return;
+      if (!(reviewingOrder && reviewingOrder.key)) return;
       await updateStatus(reviewingOrder.key, "ACCEPTED", {}, btn);
       printOrder(reviewingOrder);
       closeModal();
@@ -1348,7 +1684,7 @@
     }
 
     function reviewOpenChange() {
-      if (!reviewingOrder?.key) return;
+      if (!(reviewingOrder && reviewingOrder.key)) return;
       currentOrderKey = reviewingOrder.key;
       closeModal();
       document.getElementById("change-reason").value = "時間需調整";
@@ -1360,7 +1696,7 @@
     }
 
     function reviewOpenReject() {
-      if (!reviewingOrder?.key) return;
+      if (!(reviewingOrder && reviewingOrder.key)) return;
       currentOrderKey = reviewingOrder.key;
       closeModal();
       document.getElementById("reject-reason").selectedIndex = 0;
@@ -1368,14 +1704,14 @@
     }
 
     async function markReadyFromReview(btn) {
-      if (!reviewingOrder?.key) return;
+      if (!(reviewingOrder && reviewingOrder.key)) return;
       await updateStatus(reviewingOrder.key, "DONE", {}, btn);
       closeModal();
       switchTab("live");
     }
 
     async function reviewForceCancel(btn) {
-      if (!reviewingOrder?.key) return;
+      if (!(reviewingOrder && reviewingOrder.key)) return;
       if (!confirm("Hủy đơn hàng này do khách không phản hồi?")) return;
       await updateStatus(reviewingOrder.key, "FORCE_REJECT", {}, btn);
       closeModal();
@@ -1386,7 +1722,7 @@
       const reason = document.getElementById("change-reason").value;
       const note = document.getElementById("change-note");
       const itemsDiv = document.getElementById("change-items-div");
-      
+
       if (reason === "時間需調整") {
         note.style.display = "block";
         itemsDiv.style.display = "none";
@@ -1408,7 +1744,7 @@
         alert("Vui lòng nhập thời gian gợi ý mới (Ví dụ: 11:00)!");
         return;
       }
-      
+
       if (isChange && reason === "口味售完") {
         const checked = Array.from(document.querySelectorAll(".sold-item:checked")).map(cb => cb.value);
         if (checked.length === 0) {
@@ -1540,9 +1876,9 @@
             <div class="line"></div>
             <div class="center meta">謝謝光臨</div>
             <div style="height: 40px;"></div> <!-- Extra space for tearing -->
-          </body>
-        </html>
-      `;
+          </body >
+        </html >
+        `;
       
       doc.open();
       doc.write(html);
@@ -1557,14 +1893,15 @@
 
     function formatItemsForPrint(order) {
       if (order.reason === "Đơn qua tin nhắn") {
-        return `<pre style="white-space: pre-wrap; margin:0; font-family: inherit; font-size: 16px;">${escapeHtml(order.content)}</pre>`;
+        return `< pre style = "white-space: pre-wrap; margin:0; font-family: inherit; font-size: 16px;" > ${ escapeHtml(order.content) }</pre > `;
       }
       const lines = String(order.content || "").split("\\n").map(l => l.trimEnd()).filter(l => l.trim() !== "");
       return lines.map(line => {
         const isSub = line.trimStart().startsWith("-") || line.trimStart().startsWith("•");
-        return `<div class="item" style="${isSub ? 'margin-left: 10px; font-size: 14px;' : 'font-weight: bold; margin-top: 8px;'}">${escapeHtml(line)}</div>`;
+        return `< div class="item" style = "${isSub ? 'margin-left: 10px; font-size: 14px;' : 'font-weight: bold; margin-top: 8px;'}" > ${ escapeHtml(line) }</div >`;
       }).join("");
     }
   </script>
 </body>
+
 </html>

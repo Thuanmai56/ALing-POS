@@ -735,17 +735,8 @@ async function submitOrder() {
     const [hours, minutes] = timeInput.split(':').map(Number);
     const timeValue = hours + minutes / 60;
 
-    if (dayOfWeek === 2) {
-        return customAlert('每週二公休，請重新選擇取餐日期');
-    } else if (dayOfWeek === 0 || dayOfWeek === 6) {
-        if (timeValue < 6 || timeValue > 15) {
-            return customAlert('週末營業時間為 06:00 - 15:00');
-        }
-    } else {
-        const isValidTime = (timeValue >= 6 && timeValue <= 15) || (timeValue >= 17 && timeValue <= 19.5);
-        if (!isValidTime) {
-            return customAlert('平日營業時間為 06:00-15:00 及 17:00-19:30');
-        }
+    if (timeValue < 8 || timeValue > 21) {
+        return customAlert('營業時間為每日 08:00 - 21:00');
     }
 
     isSubmitting = true;

@@ -478,6 +478,23 @@
       }
     }
   </style>
+  <script>
+// Đoạn Script Tự Động Khóa Web bằng Central Billing System
+fetch("https://spring-smoke-46ba.thuanmnc.workers.dev/api/billing/status?tenant=ALING")
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === "SUSPENDED") {
+            document.body.innerHTML = `
+                <div style="text-align: center; margin-top: 20%; padding: 20px; font-family: -apple-system, sans-serif;">
+                    <h1 style="color: #d32f2f; font-size: 32px; font-weight: 900;">⛔ 系統已被暫停</h1>
+                    <p style="font-size: 18px; color: #6b7280; font-weight: 600; margin-top: 12px;">請完成付款以重新開啟系統。</p>
+                </div>
+            `;
+            document.body.style.background = "#fff";
+        }
+    })
+    .catch(err => console.log("Billing check failed", err));
+</script>
 </head>
 
 <body>

@@ -752,8 +752,38 @@ async function submitOrder() {
     const [hours, minutes] = timeInput.split(':').map(Number);
     const timeValue = hours + minutes / 60;
 
-    if (timeValue < 8 || timeValue > 21) {
-        return customAlert('營業時間為每日 08:00 - 21:00');
+    // Check against storeOperatingHours if available
+    if (storeOperatingHours) {
+        const shifts = storeOperatingHours[dayOfWeek] || [];
+        if (shifts.length === 0) {
+            return customAlert('本店今日公休，請重新選擇取餐日期');
+        } else {
+            let isValidTime = false;
+            let timeStrList = [];
+
+            for (let s of shifts) {
+                const [sh, sm] = s.start.split(':').map(Number);
+                const [eh, em] = s.end.split(':').map(Number);
+                const startVal = sh + sm / 60;
+                const endVal = eh + em / 60;
+
+                timeStrList.push(`${s.start}-${s.end}`);
+
+                if (timeValue >= startVal && timeValue <= endVal) {
+                    isValidTime = true;
+                    break;
+                }
+            }
+
+            if (!isValidTime) {
+                return customAlert(`本餐廳今日營業時間為：\n${timeStrList.join(' 及 ')}`);
+            }
+        }
+    } else {
+        // Fallback to hardcoded
+        if (timeValue < 8 || timeValue > 21) {
+            return customAlert('營業時間為每日 08:00 - 21:00');
+        }
     }
 
     isSubmitting = true;
@@ -834,7 +864,17 @@ function setTodayDate() {
 }
 
 const WORKER_BASE = "https://alinh.thuanmnc.workers.dev";
-async function loadDynamicMenu() {
+let storeOperatingHours = null;
+
+async function fetchConfigAndMenu() {
+    try {
+        const configReq = await fetch(`${WORKER_BASE}/api/config`);
+        if (configReq.ok) {
+            const configData = await configReq.json();
+            if (configData.operatingHours) storeOperatingHours = configData.operatingHours;
+        }
+    } catch(e) {}
+
     try {
         const res = await fetch(`${WORKER_BASE}/api/menu?_t=${Date.now()}`);
         if (res.ok) {
@@ -849,7 +889,7 @@ async function loadDynamicMenu() {
     initMenu();
     setTodayDate();
 }
-loadDynamicMenu();
+fetchConfigAndMenu();
 
 </script>
 </body>

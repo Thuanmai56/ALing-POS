@@ -567,9 +567,33 @@ fetch("https://spring-smoke-46ba.thuanmnc.workers.dev/api/billing/status?tenant=
         </div>
       </div>
 
+      <!-- Operating Hours Button -->
+      <button onclick="openHoursModal()"
+        style="width:100%; margin-bottom:14px; padding:12px; background:#f9fafb; color:#111; border:1px solid #e5e7eb; border-radius:14px; font-weight:900; cursor:pointer; font-size:15px; text-align:left; display:flex; align-items:center; gap:8px;">
+        <span>🕒</span>
+        <span style="flex:1;">營業時間</span>
+        <span style="color:#999; font-size:18px;">›</span>
+      </button>
+
       <button onclick="doLogout()"
-        style="width:100%; margin-top:14px; padding:10px; background:#fee2e2; color:#d32f2f; border:none; border-radius:10px; font-weight:900; cursor:pointer; font-size:14px;">🚪
+        style="width:100%; margin-top:0px; padding:10px; background:#fee2e2; color:#d32f2f; border:none; border-radius:10px; font-weight:900; cursor:pointer; font-size:14px;">🚪
         登出</button>
+    </div>
+  </div>
+
+  <!-- ====== OPERATING HOURS SUB-MODAL ====== -->
+  <div id="hours-modal"
+    style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:20px; padding:24px; width:90%; max-width:420px; max-height:85vh; overflow-y:auto; box-shadow:0 12px 40px rgba(0,0,0,0.3);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <span style="font-size:17px; font-weight:900;">🕒 營業時間設定</span>
+        <span onclick="closeHoursModal()" style="cursor:pointer; font-size:22px; color:#999;">✕</span>
+      </div>
+      <div id="settings-hours-container" style="display:flex; flex-direction:column; gap:12px;">
+        <div style="text-align:center; font-size:12px; color:#999;">載入中...</div>
+      </div>
+      <button onclick="saveOperatingHours()" id="btn-save-hours"
+        style="width:100%; margin-top:16px; padding:12px; background:var(--primary); color:#fff; border:none; border-radius:10px; font-weight:900; cursor:pointer; font-size:14px;">儲存營業時間</button>
     </div>
   </div>
   <div class="app">
@@ -638,7 +662,7 @@ fetch("https://spring-smoke-46ba.thuanmnc.workers.dev/api/billing/status?tenant=
           <div class="panel-header">
             <div>
               <div class="panel-title">菜單分類</div>
-              <div class="panel-sub">選擇以編輯價格</div>
+              <div class="panel-sub"><button class="btn btn-ghost" style="padding: 4px 8px; font-size: 14px; margin-top: 4px; color: var(--brand-red); border: 1px solid var(--brand-red);" onclick="addNewCategory()">+ 新增類別</button></div>
             </div>
             <button class="mini-btn" onclick="loadMenuData()">重整</button>
           </div>
@@ -893,7 +917,9 @@ fetch("https://spring-smoke-46ba.thuanmnc.workers.dev/api/billing/status?tenant=
       window.location.reload();
     }
 
-    function openSettings() {
+    let storeOperatingHours = null;
+
+    async function openSettings() {
       const m = document.getElementById("settings-modal");
       m.style.display = "flex";
       // Reset fields
@@ -901,6 +927,136 @@ fetch("https://spring-smoke-46ba.thuanmnc.workers.dev/api/billing/status?tenant=
       document.getElementById("chpw-msg").innerText = "";
       document.getElementById("templink-result").style.display = "none";
     }
+
+    async function openHoursModal() {
+      const m = document.getElementById("hours-modal");
+      m.style.display = "flex";
+      // Load config fresh each time
+      try {
+        const res = await fetch(`${WORKER_BASE}/api/config?_t=${Date.now()}`);
+        if (res.ok) {
+            const data = await res.json();
+            storeOperatingHours = data.operatingHours || createDefaultOperatingHours();
+        } else {
+            storeOperatingHours = createDefaultOperatingHours();
+        }
+      } catch (e) {
+          storeOperatingHours = createDefaultOperatingHours();
+      }
+      renderOperatingHours();
+    }
+
+    function closeHoursModal() {
+      document.getElementById("hours-modal").style.display = "none";
+    }
+    
+    function createDefaultOperatingHours() {
+        let hrs = {};
+        for(let i=0; i<7; i++) {
+            hrs[i] = [{ start: "08:00", end: "21:00" }];
+        }
+        return hrs;
+    }
+
+    const DAY_NAMES = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    function renderOperatingHours() {
+        const container = document.getElementById("settings-hours-container");
+        container.innerHTML = "";
+        
+        for (let i = 1; i <= 7; i++) {
+            const dayIdx = i === 7 ? 0 : i; // 1 to 6 (Mon-Sat), then 0 (Sun)
+            const shifts = storeOperatingHours[dayIdx] || [];
+            const isOpen = shifts.length > 0;
+            
+            const row = document.createElement("div");
+            row.style.cssText = "background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 10px;";
+            
+            let shiftsHtml = "";
+            shifts.forEach((shift, sIdx) => {
+                shiftsHtml += `
+                    <div style="display:flex; gap:6px; align-items:center; margin-top:8px;">
+                        <input type="time" id="sh-start-${dayIdx}-${sIdx}" value="${shift.start}" style="flex:1; padding:4px; font-family:inherit; border:1px solid #ccc; border-radius:4px;">
+                        <span>-</span>
+                        <input type="time" id="sh-end-${dayIdx}-${sIdx}" value="${shift.end}" style="flex:1; padding:4px; font-family:inherit; border:1px solid #ccc; border-radius:4px;">
+                        <button onclick="removeShift(${dayIdx}, ${sIdx})" style="background:none; border:none; color:#d32f2f; cursor:pointer;">✕</button>
+                    </div>
+                `;
+            });
+
+            row.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                        <input type="checkbox" ${isOpen ? 'checked' : ''} onchange="toggleDayStatus(${dayIdx}, this.checked)">
+                        <span style="font-weight:800; font-size:14px; color:${isOpen ? '#111' : '#999'};">${DAY_NAMES[dayIdx]}</span>
+                    </label>
+                    ${isOpen ? `<button onclick="addShift(${dayIdx})" style="font-size:12px; background:#eff6ff; color:#3b82f6; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">+ 新增時段</button>` : `<span style="font-size:12px; color:#d32f2f;">公休</span>`}
+                </div>
+                ${isOpen ? `<div id="shifts-box-${dayIdx}">${shiftsHtml}</div>` : ''}
+            `;
+            container.appendChild(row);
+        }
+    }
+
+    function syncOperatingHoursFromDOM() {
+        for(let i=0; i<7; i++) {
+            const shifts = storeOperatingHours[i];
+            if(shifts && shifts.length > 0) {
+                for(let sIdx=0; sIdx<shifts.length; sIdx++) {
+                    const elStart = document.getElementById(`sh-start-${i}-${sIdx}`);
+                    const elEnd = document.getElementById(`sh-end-${i}-${sIdx}`);
+                    if(elStart && elEnd) {
+                        shifts[sIdx].start = elStart.value;
+                        shifts[sIdx].end = elEnd.value;
+                    }
+                }
+            }
+        }
+    }
+
+    function toggleDayStatus(dayIdx, isChecked) {
+        if (!isChecked) {
+            storeOperatingHours[dayIdx] = [];
+        } else {
+            storeOperatingHours[dayIdx] = [{ start: "08:00", end: "21:00" }];
+        }
+        renderOperatingHours();
+    }
+
+    function addShift(dayIdx) {
+        syncOperatingHoursFromDOM();
+        storeOperatingHours[dayIdx].push({ start: "12:00", end: "13:00" });
+        renderOperatingHours();
+    }
+
+    function removeShift(dayIdx, sIdx) {
+        syncOperatingHoursFromDOM();
+        storeOperatingHours[dayIdx].splice(sIdx, 1);
+        renderOperatingHours();
+    }
+
+    async function saveOperatingHours() {
+        syncOperatingHoursFromDOM();
+        const btn = document.getElementById("btn-save-hours");
+        const oldText = btn.innerText;
+        btn.innerText = "儲存中...";
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(`${WORKER_BASE}/api/config`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ operatingHours: storeOperatingHours })
+            });
+            if (!res.ok) throw new Error("API returned " + res.status);
+            alert("營業時間儲存成功！");
+        } catch (e) {
+            alert("儲存失敗：" + e.message);
+        } finally {
+            btn.innerText = oldText;
+            btn.disabled = false;
+        }
+    }
+
     function closeSettings() { document.getElementById("settings-modal").style.display = "none"; }
 
     async function doChangePassword() {
@@ -1195,6 +1351,26 @@ fetch("https://spring-smoke-46ba.thuanmnc.workers.dev/api/billing/status?tenant=
       }
 
       cat.items.unshift(newItem); // Add to the TOP instead of bottom
+      renderMenuCategoryEditor(activeCategoryIndex);
+    }
+
+    function addNewCategory() {
+      if (!currentMenuData) return;
+      const title = prompt("請輸入新類別名稱 (例如: 飲料, 單品):", "新類別");
+      if (!title) return;
+      
+      const newCat = {
+        id: "cat_" + Date.now(),
+        title: title.trim(),
+        type: "flat",
+        items: []
+      };
+      
+      currentMenuData.push(newCat);
+      renderMenuCategories();
+      
+      // Auto focus on the new category
+      activeCategoryIndex = currentMenuData.length - 1;
       renderMenuCategoryEditor(activeCategoryIndex);
     }
 
